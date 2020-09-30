@@ -34,12 +34,7 @@ double		*arr_gen(int size, int sorted)
 		qsort(res, size, sizeof(double), cmpfunc);	
 	return res;
 }
-void		arr_print(double *arr, int size)
-{
-	for(int i = 0; i < size; i++)
-		printf("%f ", arr[i]);
-	printf("\n");
-}
+
 double		**matr_gen(matr_size size)
 {
 	double	**res;
@@ -55,15 +50,7 @@ void		matr_free(double **arr, matr_size size)
 		free(arr[i]);
 	free(arr);
 }
-void		matr_print(double **arr, matr_size size)
-{
-	for(int i = 0; i < size.rows; i++)
-	{
-		for(int j = 0; j < size.cols; j++)
-			printf("%f ", arr[i][j]);
-		printf("\n");
-	}
-}
+
 double *gauss(double **matrix, int n)
 {
 	double *res = malloc(sizeof(double)* n);
@@ -96,17 +83,19 @@ double *gauss_parallel(double **matrix, int n)
 	int	j;
 	int	k;
 
-	for (i = 0; i < n; i++) {
+	for (i = 0; i < n; i++)
+	{
 	   tmp = matrix[i][i];
 	   for (j = n; j >= i; j--)
 	      matrix[i][j] /= tmp;
 	 
-	#pragma omp parallel for private (j, k, tmp)
-	   for (j = i + 1; j < n; j++) {
-	      tmp = matrix[j][i];
-	      for (k = n; k >= i; k--)
-	         matrix[j][k] -= tmp * matrix[i][k];
-	   }
+		#pragma omp parallel for private (j, k, tmp)
+		for (j = i + 1; j < n; j++) 
+		{
+		      tmp = matrix[j][i];
+		      for (k = n; k >= i; k--)
+		      	matrix[j][k] -= tmp * matrix[i][k];
+		}
 	}
 	res[n - 1] = matrix[n - 1][n];
 	for (i = n - 2; i >= 0; i--) {
@@ -148,7 +137,7 @@ int	main(int ac, char **av)
 		printf("Invalid sizes\n");
 		return (1);
 	}
-	srand(time(0));
+	//srand(time(0));
 	slau = matr_gen(size);
 	if(size.rows <= 10)
 	{
@@ -163,13 +152,13 @@ int	main(int ac, char **av)
 	timer_start(&timer);
 	res = gauss_parallel(slau, size.rows);
 	printf("parallel   seconds: |%f|   res[0]: %f\n", (double)get_elapsed_time(timer)/1000000, res[0]);
-	free(res);
 	if(size.rows <= 10)
 	{
 		for(int i = 0; i < size.rows; i++)
 			printf("x%d = %f\n",i+1,res[i]);
 		printf("\n");
 	}
+	free(res);
 
 	matr_free(slau,size);
 	return (0);

@@ -150,7 +150,11 @@ int	main(int ac, char **av)
 	}
 	srand(time(0));
 	slau = matr_gen(size);
-	
+	if(size.rows <= 10)
+	{
+		print_slau(slau,size);
+		printf("\n");
+	}
 	timer_start(&timer);
 	res = gauss(slau, size.rows);
 	printf("consistent seconds: |%f|   res[0]: %f\n", (double)get_elapsed_time(timer)/1000000, res[0]);
@@ -160,15 +164,13 @@ int	main(int ac, char **av)
 	res = gauss_parallel(slau, size.rows);
 	printf("parallel   seconds: |%f|   res[0]: %f\n", (double)get_elapsed_time(timer)/1000000, res[0]);
 	free(res);
-	
 	if(size.rows <= 10)
 	{
-		print_slau(slau,size);
-		printf("\n");
 		for(int i = 0; i < size.rows; i++)
 			printf("x%d = %f\n",i+1,res[i]);
 		printf("\n");
 	}
+
 	matr_free(slau,size);
 	return (0);
 }

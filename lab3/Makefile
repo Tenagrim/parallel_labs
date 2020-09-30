@@ -4,7 +4,7 @@ all : $(NAME)
 
 $(NAME): main.c
 	clear;
-	gcc -fopenmp -O0  main.c -o $(NAME)
+	gcc -fopenmp -O3  main.c -o $(NAME)
 
 re: fclean all
 

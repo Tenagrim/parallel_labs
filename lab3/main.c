@@ -108,8 +108,6 @@ double *gauss_parallel(double **matrix, int n)
 	         matrix[j][k] -= tmp * matrix[i][k];
 	   }
 	}
-	 
-	//Обратный ход
 	res[n - 1] = matrix[n - 1][n];
 	for (i = n - 2; i >= 0; i--) {
 	   res[i] = matrix[i][n];

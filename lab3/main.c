@@ -100,7 +100,7 @@ double *gauss_parallel(double **matrix, int n)
 	res[n - 1] = matrix[n - 1][n];
 	for (i = n - 2; i >= 0; i--) {
 	   res[i] = matrix[i][n];
-	#pragma omp for private (j)
+	#pragma omp parallel for private (j)
 	   for (j = i + 1; j < n; j++)
 	      res[i] -= matrix[i][j] * res[j];
 	}

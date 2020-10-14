@@ -1,0 +1,3 @@
+[submodule "lab4/oneTBB"]
+	path = lab4/oneTBB
+	url = https://github.com/oneapi-src/oneTBB.git

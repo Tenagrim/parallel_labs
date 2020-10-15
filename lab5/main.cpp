@@ -3,7 +3,6 @@
 #include <fstream>
 #include <cstdlib>
 #include "mpi.h"
-#include <omp.h>
 using namespace std;
 
 /*****************************FUNCTION PROTOTYPES******************************/
@@ -15,9 +14,9 @@ void swap(int*, int*, int);
 
 class Space{
   public:
-	int p;					//Prime defining Zp
-	int* mult_inv;			//Array of multiplicative inverses in Zp
-	int* add_inv;			//Array of additive inverses in Zp
+	int p;				
+	int* mult_inv;			
+	int* add_inv;		
 
 	Space(int);
 };
@@ -52,7 +51,7 @@ int main (int argc, char **argv ) {
 	int p = 7;
 	Space modp(p);
 		Matrix system;
-		system.init_with_file("coefficients.txt", p);
+		system.init_with_file("slau.txt", p);
 		if(myid == 0){
 			cout << endl << system.size << endl << endl;
 			system.display();
